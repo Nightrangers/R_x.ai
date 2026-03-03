@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cypher Soul</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Consolas, monospace;
+    background: #000814;
+    color: #00bfff;
+}
+
+/* HEADER */
+header {
+    background: #001d3d;
+    padding: 25px;
+    text-align: center;
+    font-size: 38px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #00bfff;
+    text-shadow: 0 0 15px #00bfff;
+    border-bottom: 2px solid #003566;
+}
+
+/* NAVIGATION */
+nav {
+    display: flex;
+    background: #000814;
+}
+
+nav button {
+    flex: 1;
+    padding: 15px;
+    background: #001d3d;
+    border: none;
+    color: #00bfff;
+    font-size: 18px;
+    cursor: pointer;
+    border-bottom: 2px solid #003566;
+    transition: 0.3s;
+}
+
+nav button:hover {
+    background: #003566;
+}
+
+/* SECTIONS */
+.section {
+    display: none;
+    padding: 40px;
+}
+
+.active {
+    display: block;
+}
+
+/* CONTAINER */
+.container {
+    background: #001d3d;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #003566;
+    width: 420px;
+    margin: auto;
+}
+
+/* INPUTS */
+input, textarea {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    background: #000814;
+    color: #00bfff;
+    border: 1px solid #003566;
+    border-radius: 5px;
+}
+
+/* BUTTONS */
+button.action {
+    padding: 10px 20px;
+    background: #003566;
+    border: none;
+    color: #00bfff;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+button.action:hover {
+    background: #00509d;
+}
+
+/* LINKS */
+a {
+    color: #7df9ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.result {
+    margin-top: 15px;
+    font-weight: bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>⚡ CYPHER SOUL 💻</header>
+
+<nav>
+    <button onclick="showSection('home')">🏠 Home</button>
+    <button onclick="showSection('ai')">🛡 CyberSafety AI</button>
+</nav>
+
+<div id="home" class="section active">
+    <h2>🌌 Welcome to Cypher Soul</h2>
+    <p> This website is created by the owners of <strong>Swag of Horror</strong>.</p>
+    <p> Visit our official website here:</p>
+    <p>
+        <a href="https://swag-of-horror.netlify.app/" target="_blank">
+            🌐 swag-of-horror.netlify.app
+        </a>
+    </p>
+    <p>🚀 Built for cybersecurity awareness & innovation.</p>
+</div>
+
+<div id="ai" class="section">
+    <div class="container">
+        <h2>🛡 Cyber Safety AI</h2>
+
+        <h3>🔐 Password Strength Checker</h3>
+        <input type="password" id="password" placeholder="Enter password">
+        <br>
+        <button class="action" onclick="checkPassword()">⚡ Analyze Password</button>
+        <div class="result" id="passwordResult"></div>
+
+        <hr style="border:1px solid #003566;">
+
+        <h3>📧 Phishing Detector</h3>
+        <textarea id="message" placeholder="Paste suspicious message"></textarea>
+        <br>
+        <button class="action" onclick="checkPhishing()">🧠 Scan Message</button>
+        <div class="result" id="phishingResult"></div>
+    </div>
+</div>
+
+<script>
+function showSection(sectionId) {
+    document.getElementById("home").classList.remove("active");
+    document.getElementById("ai").classList.remove("active");
+    document.getElementById(sectionId).classList.add("active");
+}
+
+function checkPassword() {
+    let password = document.getElementById("password").value;
+    let score = 0;
+
+    if (password.length >= 8) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[a-z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[@#$%^&+=]/.test(password)) score++;
+
+    let result = document.getElementById("passwordResult");
+
+    if (score <= 2) {
+        result.innerHTML = "⚠ Weak Password — Improve Security!";
+        result.style.color = "#1e90ff";
+    } else if (score <= 4) {
+        result.innerHTML = "🔎 Moderate Password — Could Be Stronger";
+        result.style.color = "#00bfff";
+    } else {
+        result.innerHTML = "✅ Strong Password — Secure!";
+        result.style.color = "#7df9ff";
+    }
+}
+
+function checkPhishing() {
+    let message = document.getElementById("message").value.toLowerCase();
+    let suspiciousWords = ["urgent", "click here", "winner", "free", "password", "bank"];
+    let result = document.getElementById("phishingResult");
+    let detected = false;
+
+    for (let word of suspiciousWords) {
+        if (message.includes(word)) {
+            detected = true;
+            break;
+        }
+    }
+
+    if (detected) {
+        result.innerHTML = "🚨 Possible Phishing Message Detected!";
+        result.style.color = "#1e90ff";
+    } else {
+        result.innerHTML = "🛡 Message Looks Safe";
+        result.style.color = "#7df9ff";
+    }
+}
+</script>
+
+</body>
+</html>
