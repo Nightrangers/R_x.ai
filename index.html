@@ -128,7 +128,7 @@ a:hover {
             🌐 swag-of-horror.netlify.app
         </a>
     </p>
-    <p>🚀 Built for cybersecurity awareness & innovation.</p>
+    <p>🚀This website is built for cybersecurity awareness & innovation.</p>
 </div>
 
 <div id="ai" class="section">
@@ -143,7 +143,7 @@ a:hover {
 
         <hr style="border:1px solid #003566;">
 
-        <h3>📧 Phishing Detector</h3>
+        <h3>📧 Phishing & Scam Detector</h3>
         <textarea id="message" placeholder="Paste suspicious message"></textarea>
         <br>
         <button class="action" onclick="checkPhishing()">🧠 Scan Message</button>
@@ -184,22 +184,46 @@ function checkPassword() {
 
 function checkPhishing() {
     let message = document.getElementById("message").value.toLowerCase();
-    let suspiciousWords = ["urgent", "click here", "winner", "free", "password", "bank"];
     let result = document.getElementById("phishingResult");
-    let detected = false;
 
-    for (let word of suspiciousWords) {
-        if (message.includes(word)) {
-            detected = true;
-            break;
-        }
+    let highRiskKeywords = [
+        "otp",
+        "one time password",
+        "share otp",
+        "tell me the otp",
+        "sent money by mistake",
+        "refund",
+        "account blocked",
+        "verify now",
+        "upi pin",
+        "bank details",
+        "click this link",
+        "urgent action required"
+    ];
+
+    let suspiciousKeywords = [
+        "winner",
+        "lottery",
+        "free money",
+        "limited offer",
+        "act fast",
+        "investment opportunity",
+        "claim now"
+    ];
+
+    let isHighRisk = highRiskKeywords.some(word => message.includes(word));
+    let isSuspicious = suspiciousKeywords.some(word => message.includes(word));
+
+    if (isHighRisk) {
+        result.innerHTML = "🚨 HIGH RISK SCAM DETECTED! <br> Never share OTP, PIN, or personal details!";
+        result.style.color = "#00bfff";
     }
-
-    if (detected) {
-        result.innerHTML = "🚨 Possible Phishing Message Detected!";
+    else if (isSuspicious) {
+        result.innerHTML = "⚠ Suspicious Message — Be Careful Before Responding.";
         result.style.color = "#1e90ff";
-    } else {
-        result.innerHTML = "🛡 Message Looks Safe";
+    }
+    else {
+        result.innerHTML = "🛡 Message Appears Safe — Stay Alert Online.";
         result.style.color = "#7df9ff";
     }
 }
